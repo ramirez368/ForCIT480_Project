@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Install latest version of wget
+      apt: name=wget update_cache=yes state=latest
+    
+    - name: Install latest version of curl
+      apt: name=curl update_cache=yes state=latest
+
+    - name: Download file from a file path
+      get_url:
+        url: https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz
+        dest: /ansible/packages/prometheus-2.3.2.linux-amd64.tar.gz
+
+    - name: Extract tar
+      unarchive:
+        src: /ansible/packages/prometheus-2.3.2.linux-amd64.tar.gz
+        dest: /ansible/packages
+
+    - name: Download file from a file path
+      get_url:
+        url: https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
+        dest: /ansible/packages/node_exporter-1.2.2.linux-amd64.tar.gz
+
+    - name: Extract tar
+      unarchive:
+        src: /ansible/packages/node_exporter-1.2.2.linux-amd64.tar.gz
+        dest: /ansible/packages
